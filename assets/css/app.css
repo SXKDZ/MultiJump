@@ -1,0 +1,38 @@
+/* This file is for your main application css. */
+body {
+    overflow: hidden;
+}
+body > :not(#app) {
+    display: none
+}
+
+#log {
+    position: absolute;
+    bottom: 5%;
+    left: 5%;
+    color: grey;
+}
+
+#billboard {
+    position: absolute;
+    right: 5%;
+    top: 5%;
+    padding: 5px 0;
+    background: rgba(255, 255, 255, 0.6);
+}
+#billboard div {
+    padding: 0 10px;
+    line-height: 1.6;
+}
+#billboard .current {
+    color: #cc0000;
+    background: #ffffff80;
+}
+#billboard .current:before {
+    content: "It's me!";
+    position: absolute;
+    left: -3.6em;
+    transform: rotateZ(-10deg);
+    font-size: .5em;
+    color: #ff5555;
+}
