@@ -1,7 +1,7 @@
 import { Playground } from './game.js'
 import { toHex } from './color.js'
 import Tween from 'tween.js'
-import { handleStart, handleNoJump, handleJump, channel } from './socket.js'
+import { handleStart, handleNoJump, handleJump, handleTerminate, channel } from './socket.js'
 
 const state = {}
 
@@ -147,7 +147,20 @@ function onClick () {
     }
   })
 
-  channel.on('no-jump', updateBillboard)
+  channel.on('no-jump', payload => {
+    if (payload.room === room) {
+      updateBillboard()
+      if (payload.name !== name) {
+      // console.log('no-jump', payload)
+        playground.playersFall(payload.name)
+      }
+    }
+  })
+  channel.on('terminate', payload => {
+    if (payload.room === room) {
+      window.history.go(0)
+    }
+  })
 
   document.querySelector('#restart').addEventListener('click', () => {
     setState({
@@ -160,6 +173,10 @@ function onClick () {
       status: {}
     })
     playground.reset()
+  })
+
+  document.querySelector('#shutdown').addEventListener('click', () => {
+    handleTerminate(room, name)
   })
 }
 

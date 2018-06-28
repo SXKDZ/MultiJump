@@ -79,7 +79,7 @@ class Playground {
       antialias: true,
       canvas: document.querySelector('canvas')
     })
-    renderer.setPixelRatio(window.devicePixelRatio)
+    // renderer.setPixelRatio(window.devicePixelRatio)
     renderer.setSize(window.innerWidth, window.innerHeight)
     renderer.setClearColor(0xffffff)
     renderer.shadowMap.enabled = true
@@ -360,6 +360,9 @@ class Playground {
         if (!dotsX[0]) {
           // Fall from x-
           console.log('Fall from x-')
+
+          this.gameover()
+
           const axis = cube.getBounding().x.min
           await hero.rotateAloneZ(axis, {
             rotation: [0, 0, Math.PI / 2],
@@ -370,10 +373,11 @@ class Playground {
           await hero.moveTo({
             position: pos.toArray()
           })
-          await this.gameover()
         } else {
           // Fall from x+
           console.log('Fall from x+')
+
+          this.gameover()
 
           const axis = cube.getBounding().x.max
           await hero.rotateAloneZ(axis, {
@@ -385,13 +389,15 @@ class Playground {
           await hero.moveTo({
             position: pos.toArray()
           })
-          await this.gameover()
         }
         break
       } else if (sum(dotsZ) === 1) {
         if (!dotsZ[0]) {
           // Fall from z-
           console.log('Fall from z-')
+
+          this.gameover()
+
           const axis = cube.getBounding().z.min
           await hero.rotateAloneX(axis, {
             rotation: [-Math.PI / 2, 0, 0],
@@ -402,10 +408,11 @@ class Playground {
           await hero.moveTo({
             position: pos.toArray()
           })
-          await this.gameover()
         } else {
           // Fall from z+
           console.log('Fall from z+')
+
+          this.gameover()
 
           const axis = cube.getBounding().z.max
           await hero.rotateAloneX(axis, {
@@ -417,7 +424,6 @@ class Playground {
           await hero.moveTo({
             position: pos.toArray()
           })
-          await this.gameover()
         }
         break
       } else {
@@ -435,12 +441,13 @@ class Playground {
 
       const easing = x => h * dt * dt / d / t0 / t0 * x * x + 2 * h * dt / d / t0 * x
 
+      this.gameover()
+
       await hero.moveBy({
         position: [0, -down, 0],
         duration: deltaT,
         easing
       })
-      await this.gameover()
     }
   }
 
@@ -467,6 +474,11 @@ class Playground {
     } else {
       this.herosGroup.remove(hero.object)
     }
+  }
+
+  playersFall (name) {
+    const hero = this.heros[name]
+    this.herosGroup.remove(hero.object)
   }
 
   async gameover () {

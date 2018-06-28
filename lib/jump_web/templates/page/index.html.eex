@@ -7,6 +7,7 @@
     <span class="value"></span>
   </div>
   <div class="button" id="restart">Jump Again</div>
+  <div class="button" id="shutdown">x</div>
 
   <div class="button " id="trigger">
 

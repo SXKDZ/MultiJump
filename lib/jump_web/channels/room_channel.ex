@@ -32,6 +32,8 @@ defmodule JumpWeb.RoomChannel do
 
     query = from r in Jump.Room, where: r.key == ^room
     Jump.Repo.delete_all(query)
+    query = from r in Jump.Result, where: r.room_key == ^room
+    Jump.Repo.delete_all(query)
 
     broadcast socket, "terminate", payload
     {:noreply, socket}
